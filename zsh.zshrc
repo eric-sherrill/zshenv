@@ -3,12 +3,11 @@
 # Created by Konstantin Shulgin <konstantin.shulgin@gmail.com>
 #============================================================================#
 
-
 #----------------------------------------------------------------------------#
-# utily functions
+# utility functions
 #----------------------------------------------------------------------------#
 
-# check is application exists via 'witch' utility
+# check if application exists via 'which' utility
 function provided_in_env()
 {
     local bin=$1
@@ -19,7 +18,6 @@ function provided_in_env()
 
     return 1
 }
-
 
 #----------------------------------------------------------------------------#
 # User enviroment settings
@@ -32,7 +30,7 @@ export ZSH_HOME=$HOME/.zsh
 export EDITOR=vim
 
 # Path (add macports)
-export PATH=$PATH:/opt/local/bin:/opt/local/sbin
+export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 
 # Man path (add macports)
 export MANPATH=/opt/local/share/man:$MANPATH
@@ -43,9 +41,33 @@ export TERM=xterm-color
 # Enable color in the terminal
 export CLICOLOR=1
 
+export PATH=$PATH:~/Library/Python/3.9/bin/
+export PATH=/usr/local/opt/bison/bin:$PATH
+export PATH=/usr/local/bin:~/bin:$PATH
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home/
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/opt/openssl/lib/pkgconfig
+export CS3_DEPLOY_PREFIX=eric.sherrill.224c10614220ab29
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/eric.sherrill/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/eric.sherrill/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/eric.sherrill/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/eric.sherrill/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+eval "$(pyenv init --path)"
+. "$HOME/.cargo/env"
+
+# >>>> Vagrant command completion (start)
+fpath=(/opt/vagrant/embedded/gems/2.2.19/gems/vagrant-2.2.19/contrib/zsh $fpath)
+compinit
+# <<<<  Vagrant command completion (end)
 
 #-----------------------------------------------------------------------------#
-# zsh mudules
+# zsh modules
 #-----------------------------------------------------------------------------#
 
 # Initialize colors
@@ -115,14 +137,12 @@ function zsh_plugin_dir_load()
 # load all plugins
 zsh_plugin_dir_load $ZSH_HOME/plugins
 
-
 #
 # Git plugin settings
 #
 
 # show dirty state in the branch
 export GIT_PS1_SHOWDIRTYSTATE=true
-
 
 #----------------------------------------------------------------------------#
 # prompt settings
@@ -131,9 +151,8 @@ export GIT_PS1_SHOWDIRTYSTATE=true
 # Allow for functions in the prompt.
 setopt PROMPT_SUBST
 
-# Promt settings
+# Prompt settings
 PROMPT='%F{yellow}%n@%m%f:%F{cyan}%~%F{magenta}$(__git_ps1 "(%s)")%F{green}$%f '
-
 
 #----------------------------------------------------------------------------#
 # Colors
@@ -151,7 +170,6 @@ done
 if [[ "$dircolors_bin" != "" ]]; then
     eval $($dircolors_bin ~/.zsh/dir_colors)
 fi
-
 
 #----------------------------------------------------------------------------#
 # Aliases
@@ -191,13 +209,12 @@ alias lla='ls -lsa'
 
 # move-rename w/o correction and always in interactive mode
 alias mv='nocorrect mv -i'
-# recursize copy w/o correction and always in interactive mode
+# recursive copy w/o correction and always in interactive mode
 alias cp='nocorrect cp -iR'
 # remove w/o correction and always in interactive mode
 alias rm='nocorrect rm -i'
-# create direcotory w/o correction
+# create directory w/o correction
 alias mkdir='nocorrect mkdir'
-
 
 #----------------------------------------------------------------------------#
 # History
@@ -206,19 +223,17 @@ alias mkdir='nocorrect mkdir'
 # History file
 HISTFILE=$ZSH_HOME/zsh_history
 
-# Commands count histroy in history file
+# Commands count history in history file
 SAVEHIST=5000
 
-# Commands count histroy in one seance
+# Commands count history in one seance
 HISTSIZE=5000
 
 # Append history list to the history file (important for multiple parallel zsh sessions!)
 setopt  APPEND_HISTORY
-
 setopt  HIST_IGNORE_ALL_DUPS
-
 setopt  HIST_IGNORE_SPACE
-
 setopt  HIST_REDUCE_BLANKS
+eval "$(starship init zsh)"
 
-# zsh.zshrc is end here
+# zsh.zshrc end here
