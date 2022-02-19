@@ -234,6 +234,7 @@ setopt  APPEND_HISTORY
 setopt  HIST_IGNORE_ALL_DUPS
 setopt  HIST_IGNORE_SPACE
 setopt  HIST_REDUCE_BLANKS
+eval "$(rbenv init - zsh)"
 eval "$(starship init zsh)"
 
 # zsh.zshrc end here
